@@ -1,0 +1,94 @@
+.mainContainer{
+    width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .TitleStyle {
+            font-size: var(--font-40);
+            font-weight: var(--font-semibold);
+            margin: 20px auto;
+            color: var(--green1);
+            }
+            .dividerStyle {
+                height: 1px;
+            }
+                         .container {
+                             width: 500px;
+                             height: 100%;
+                             display: flex;
+                             flex-direction: column;
+                             margin: 20px auto;
+            
+                            
+            
+                             .loginForm {
+                                 width: 100%;
+                                 height: 100px;
+            
+                                 .selectInputField {
+            
+                                     width: 100%;
+                                     max-width: 366px;
+                                     padding: 5px 0px;
+                                     font-size: var(--font-14);
+                                     color: var(--grey4);
+                                     border: 1px solid var(--grey3);
+                                     border-radius: 5px;
+            
+                                     &:focus {
+                                         outline: none !important;
+                                         border: 1px solid var(--grey2);
+                                     }
+            
+                                 }
+            
+                                 .iconLabelStyle {
+                                     display: flex;
+                                     flex-direction: row;
+                                     margin-top: 10px;
+            
+                                     .iconCustomClass {
+                                         margin-top: 12px;
+                                         width: 20px;
+                                         height: 20px;
+                                     }
+            
+                                     .labelStyle {
+                                         font-weight: var(--font-normal);
+                                         font-size: var(--font-16);
+                                         padding: 10px 0px;
+                                     }
+                                 }
+            
+                                 .inputFieldStyle {
+                                     width: 100%;
+                                     max-width: 366px;
+                                     padding: 5px 0px;
+                                     font-size: var(--font-14);
+                                     border: none;
+                                     color: var(--grey4);
+                                     border-bottom: 1px solid var(--grey5);
+            
+                                     &:focus {
+                                         outline: none !important;
+                                         border-bottom: 1px solid var(--grey2);
+                                     }
+                                 }
+            
+                                 .errorText {
+                                     color: var(--errorColor);
+                                     font-size: var(--font-14);
+                                     font-weight: var(--font-medium);
+            
+                                 }
+                             }
+            
+                             .submitButtonStyle {
+                                 margin: 15px 0px 0px 0px !important;
+                                 width: 100% !important;
+                                 max-width: 366px !important;
+                                 cursor: pointer;
+                                 background: var(--green2);
+                             }
+                         }
+}

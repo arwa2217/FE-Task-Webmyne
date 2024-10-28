@@ -1,0 +1,44 @@
+.mainContainer{
+    width: 300px;
+    height: 100%;
+    display: flex;
+    align-self: center !important;
+    margin:10% auto !important;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    .container{
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        margin: 20px 10px;
+        .logoContainer{
+        width: 100px;
+            height: 95px;
+            background-color: var(--green1);
+            border-radius: 100%;
+            margin: auto auto 20px auto;
+        }
+        .inputFieldContainer{
+            padding: 5px;
+            max-width: 300px;
+            margin: 15px 0px;
+            border: none;
+            border-bottom: 1px solid rgb(233, 233, 233);
+            &:focus{
+                outline: none !important;
+                border-bottom: 1px solid black;
+            }
+        }
+        .errorText{
+            color: var(--red1);
+            font-size: 12px;
+        }
+        .customButton{
+            width: 100px;
+            height: 30px;
+            background-color: var(--green1);
+            font-weight: 600;
+            margin: 20px auto 0px auto;
+        }
+    }
+}
