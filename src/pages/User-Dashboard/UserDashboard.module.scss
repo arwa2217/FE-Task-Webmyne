@@ -12,83 +12,136 @@
             .dividerStyle {
                 height: 1px;
             }
-                         .container {
-                             width: 500px;
-                             height: 100%;
-                             display: flex;
-                             flex-direction: column;
-                             margin: 20px auto;
+    .container {
+    width: 96%;
+    height: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    .titleContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .titleStyle {
+                font-size: var(--font-28);
+                font-weight: var(--font-semibold);
+                color: var(--green1);
+                padding-left: 20px;
+            }
+.formButtonContainer{
+    display: flex;
+    flex-direction: row;
+.buttonStyle {
+        align-self: center;
+        margin: 0px 10px 0px 0px !important;
+        width: 100px !important;
+        cursor: pointer;
+        background: var(--green1);
+        padding: 10px;
+        font-size: var(--font-16);
+    }
+
+}
+                       
+    }
+
+    .dividerStyle {
+        height: 1px;
+    }
+    .formContainer{
+        width: 100%;
+        height: 100%;
+        margin: 10px;
+        display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             
-                            
-            
-                             .loginForm {
-                                 width: 100%;
-                                 height: 100px;
-            
-                                 .selectInputField {
-            
-                                     width: 100%;
-                                     max-width: 366px;
-                                     padding: 5px 0px;
-                                     font-size: var(--font-14);
-                                     color: var(--grey4);
-                                     border: 1px solid var(--grey3);
-                                     border-radius: 5px;
-            
-                                     &:focus {
-                                         outline: none !important;
-                                         border: 1px solid var(--grey2);
-                                     }
-            
-                                 }
-            
-                                 .iconLabelStyle {
-                                     display: flex;
-                                     flex-direction: row;
-                                     margin-top: 10px;
-            
-                                     .iconCustomClass {
-                                         margin-top: 12px;
-                                         width: 20px;
-                                         height: 20px;
-                                     }
-            
-                                     .labelStyle {
-                                         font-weight: var(--font-normal);
-                                         font-size: var(--font-16);
-                                         padding: 10px 0px;
-                                     }
-                                 }
-            
-                                 .inputFieldStyle {
-                                     width: 100%;
-                                     max-width: 366px;
-                                     padding: 5px 0px;
-                                     font-size: var(--font-14);
-                                     border: none;
-                                     color: var(--grey4);
-                                     border-bottom: 1px solid var(--grey5);
-            
-                                     &:focus {
-                                         outline: none !important;
-                                         border-bottom: 1px solid var(--grey2);
-                                     }
-                                 }
-            
-                                 .errorText {
-                                     color: var(--errorColor);
-                                     font-size: var(--font-14);
-                                     font-weight: var(--font-medium);
-            
-                                 }
-                             }
-            
-                             .submitButtonStyle {
-                                 margin: 15px 0px 0px 0px !important;
-                                 width: 100% !important;
-                                 max-width: 366px !important;
-                                 cursor: pointer;
-                                 background: var(--green2);
-                             }
-                         }
+        .formFieldContainer {
+                display: flex;
+                flex-direction: column;
+.asterick{
+    color: var(--red1);
+}
+                .selectInputField {
+                width: 100%;
+                    max-width: 300px;
+                    margin-top: 10px;
+                    
+                    font-size: var(--font-14);
+                    color: var(--black1);
+                    border-radius: 10px;
+                    cursor: pointer !important;
+                    &:focus {
+                        outline: none !important;
+                        border: 1px solid var(--grey4);
+                    }
+        
+                }
+        
+                .inputFieldStyle {
+                    width: 100%;
+                    max-width: 280px;
+                    padding: 13px 10px 13px 10px;
+                    font-size: var(--font-14);
+                    color: var(--black1);
+                    border: 1px solid var(--grey2);
+                    border-radius: 10px;
+                    margin-top: 10px;
+        
+                    &:focus {
+                        outline: none !important;
+                        border: 1px solid var(--grey4);
+                    }
+                }
+
+                                .textAreaFieldStyle {
+                                    width: 300px;
+                                    height: 100px;        
+                                    padding: 13px 5px;
+                                    font-size: var(--font-14);
+                                    color: var(--black1);
+                                    border: 1px solid var(--grey2);
+                                    border-radius: 10px;
+                                    margin-top: 10px;
+                                    resize:none;
+                
+                                    &:focus {
+                                        outline: none !important;
+                                        border: 1px solid var(--grey4);
+                                    }
+                                }
+        
+                .errorText {
+                    color: var(--red1);
+                    font-size: var(--font-14);
+                    font-weight: var(--font-medium);
+        
+                }
+            }
+            .buttonContainer{
+                display: flex;
+            .submitButtonStyle {
+                    margin: auto 0px 0px 0px !important;
+                    width: 80px !important;
+                    cursor: pointer;
+                    background: var(--green1);
+                    padding: 10px 0px;
+                    font-size: var(--font-16);
+                }
+                .cancelButtonStyle {
+                    margin: auto 0px 0px 15px !important;
+                    width: 80px !important;
+                    cursor: pointer;
+                    border: 2px solid var(--red2);
+                    color: var(--red2);
+                    background:none;
+                    padding: 10px 0px;
+                    font-size: var(--font-16);
+                }
+            }
+                        
+         
+    }
+         
+}
 }

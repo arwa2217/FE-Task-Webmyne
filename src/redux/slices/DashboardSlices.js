@@ -6,8 +6,11 @@ export const userLoginDetail = createAsyncThunk(
     async (payload, {rejectWithValue}) => {
         try {
             const res = await userLogin(payload);
-            if (res.status === 200) {
-                return res.data;
+          if (res.status === 200) {
+              localStorage.setItem("accessToken", res.data.accessToken);
+              localStorage.setItem("refreshToken", res.data.refreshToken);
+              return res.data;
+                
             }
         }
         catch (error) {
@@ -98,13 +101,37 @@ export const userDetailSlice = createSlice({
   initialState: {
     isLoading: false,
     error: null,
+    isAuthenticated: !!localStorage.getItem("accessToken"),
     userDetails:{},
     usersList: [],
     masterPriorityList: [],
     masterStatusList: [],
     userDataList: [],
-    OaFailureTypeList:[],
-    }, 
+    OaFailureTypeList: [],
+    userInfo:[],
+  }, 
+  
+  reducers: {
+      addUsers: (state, action) => {
+            state.userInfo?.push(action?.payload);
+    },
+    deleteUser: (state, action) => {
+            state.userInfo = state.userInfo?.filter(
+            (user) => user?.id !== action.payload);
+    },
+    userLogout: (state) => {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            state.isAuthenticated = false;
+            state.userDetails = {};
+state.usersList = [];
+state.masterPriorityList = [];
+state.masterStatusList = [];
+state.userDataList = [];
+state.OaFailureTypeList = [];
+state.userInfo = [];
+    },
+  },
   
  extraReducers: (builder) => {
    builder
@@ -114,6 +141,7 @@ export const userDetailSlice = createSlice({
       })
       .addCase(userLoginDetail.fulfilled, (state, action) => {
         state.isLoading = false;
+         state.isAuthenticated = true;
         state.userDetails = action.payload;
       })
       .addCase(userLoginDetail.rejected, (state, action) => {
@@ -185,5 +213,5 @@ export const userDetailSlice = createSlice({
       })
   },
 });
-
+export const { addUsers,deleteUser,userLogout} = userDetailSlice.actions;
 export default userDetailSlice.reducer;

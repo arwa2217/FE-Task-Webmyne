@@ -4,6 +4,7 @@
     --font-18: 18px;
     --font-22: 22px;
     --font-24: 24px;
+    --font-28: 28px;
     --font-40:40px;
     --font-normal: 400;
     --font-medium: 500;
@@ -15,6 +16,10 @@
     --black1:#000000;
     --grey1: #C0C0C0;
     --grey2:#C6C6C6;
+    --grey3: #ecf0f5;
+    --grey4: #6d6d6e;
+    --grey5: #fafafa;
     --red1: #ff2e2e;
+    --red2: #b11313;
     --green1:#008000;
 }
