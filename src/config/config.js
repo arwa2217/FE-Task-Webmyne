@@ -8,4 +8,8 @@ export const MASTER_STATUS = "http://drivequote-api-dev.webmyneproduct.com/api/M
 
 export const USERS = "http://drivequote-api-dev.webmyneproduct.com/api/Users/getalls"
 
-export const OAFAILURETYPE ="http://drivequote-api-dev.webmyneproduct.com/api/MasterOAFailure/getalls"
+export const BRANCH_FLOW = "http://drivequote-api-dev.webmyneproduct.com/api/MappingDriveFlowEmployee/getalls"
+
+export const OAFAILURETYPE = "http://drivequote-api-dev.webmyneproduct.com/api/MasterOAFailure/getalls"
+
+export const ADD_USERS ="http://drivequote-api-dev.webmyneproduct.com/api/DriveFlow"

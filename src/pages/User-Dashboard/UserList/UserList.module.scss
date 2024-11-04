@@ -16,14 +16,27 @@
         color: var(--green1);
         margin-right: 12%;
     }
-    .backButtonStyle {
-        margin: 0px 10px 0px 0px !important;
-        width: 80px !important;
-        cursor: pointer;
-        background: var(--green1);
-        padding: 10px;
-        font-size: var(--font-16);
-    }
+         .searchButtonStyle {
+             margin: 0px 10px 0px 0px !important;
+             width: 80px !important;
+             cursor: pointer;
+             background: var(--green1);
+             padding: 10px;
+             font-size: var(--font-16);
+         }
+    
+        
+        
+            .dashboardButtonStyle {
+                margin: 0px 10px 0px 0px !important;
+                width: 120px !important;
+                cursor: pointer;
+                background: var(--green1);
+                padding: 10px;
+                font-size: var(--font-16);
+            }
+    
+
     .formContainer{
         display: flex;
         flex-direction: row;

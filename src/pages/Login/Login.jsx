@@ -22,7 +22,7 @@ const Login = () => {
       password: data.password,
     }
     dispatch(userLoginDetail(userData));
-    navigate("/user-dashboard")
+    navigate("/user-list")
     }
   return (
     <>
@@ -48,9 +48,7 @@ const Login = () => {
             {...register(PASSWORD, loginValidators[PASSWORD])} /> 
           {errors.password && (
                 <span className={styles.errorText}>{errors.password.message}</span>
-          )}
-          
-       
+          )}      
           <Button type="submit" buttonName="Login" customClass={styles.customButton}/>    
         </div> 
        

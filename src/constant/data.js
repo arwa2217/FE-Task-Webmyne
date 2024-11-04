@@ -1,1 +1,1 @@
-export const userHeaderData = ['Name', 'Order ID', 'Priority', 'Branch', 'Department', 'User Type'];
+export const userHeaderData = ['Name', 'Order ID', 'Priority', 'Priority Name','Branch', 'Department', 'Sub Dept', 'OA No.'];

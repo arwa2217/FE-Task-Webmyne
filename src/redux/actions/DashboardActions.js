@@ -1,5 +1,5 @@
 import axios from "axios"
-import {GET_USERS, LOGIN_USER, MASTER_PRIORITY, MASTER_STATUS, OAFAILURETYPE, USERS } from "../../config/config"
+import {ADD_USERS, BRANCH_FLOW,GET_USERS, LOGIN_USER, MASTER_PRIORITY, MASTER_STATUS, OAFAILURETYPE, USERS } from "../../config/config"
 
 // login user
 export const userLogin = (data) => {
@@ -14,6 +14,11 @@ export const userLogin = (data) => {
 // headers
 const getAuthHeaders = () => ({
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+});
+
+const getMultiHeaders = () => ({
+    "Content-Type": "multipart/form-data",
     'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
 });
 
@@ -43,7 +48,19 @@ export const getOaFailureTypeList = () => {
 }
 // getUsers
 export const getUsers = () => {
-    return axios.get(USERS, {
+    return axios.get(USERS,{
         headers: getAuthHeaders()   
+    })
+}
+// getBranchFlow
+export const getBranchFlow = () => {
+    return axios.get(BRANCH_FLOW, {
+        headers: getAuthHeaders()   
+    })
+}
+// add users
+export const getCreateUsers = (formData) => {
+    return axios.post(ADD_USERS, formData,{
+        headers: getMultiHeaders()   
     })
 }

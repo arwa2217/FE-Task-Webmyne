@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styles from "./UserDashboard.module.scss"
 import { useDispatch, useSelector} from 'react-redux'
-import { addUsers, getAllMasterPriority, getAllMasterStatus, getAllOaFailureTypeList, getUserList, getUsersDataList} from '../../redux/slices/DashboardSlices';
+import { addUsers, getAddUsers, getAllMasterPriority, getAllMasterStatus, getAllOaFailureTypeList, getBranchFlowList, getUserList, getUsersDataList, userLogout} from '../../redux/slices/DashboardSlices';
 import Divider from '../../component/Divider/Divider';
 import { useForm } from 'react-hook-form';
 import { BRANCH, COMMENT, DEPARTMENT, DOC_NO, FLOW_EMAIL_BODY, NAME, OA_FAILURE_TYPE, ORDER_NUMBER, PRIORITY, STATUS, SUB_DEPARTMENT, SUBJECT, TO_USER } from '../../constant/form-key';
@@ -9,40 +9,29 @@ import { userFormValidators } from '../../form-validators/userFormValidators';
 import Button from '../../component/Button/Button';
 import { useNavigate} from 'react-router-dom';
 import Select from 'react-select';
+import Loader from '../../component/Loader/Loader';
 
 
 const UserDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { masterPriorityList, masterStatusList, userDataList, OaFailureTypeList } = useSelector((state) => state.userDetail);
-  // console.log("masterPriorityList?????????", masterPriorityList);
-  // console.log("masterStatusList?????", masterStatusList);
-  // console.log("userDataList??????", userDataList);
-  // console.log('OaFailureTypeList????????', OaFailureTypeList);
+  const {isLoading, masterPriorityList, masterStatusList, branchFlowList,userDataList, OaFailureTypeList } = useSelector((state) => state.userDetail);
+  console.log("masterPriorityList?????????", masterPriorityList);
+  console.log("masterStatusList?????", masterStatusList);
+  console.log("userDataList??????", userDataList);
+  console.log('OaFailureTypeList????????', OaFailureTypeList);
+  console.log('branchFlowList????????', branchFlowList);
 
   useEffect(() => { 
-    // get-api-allUsers
-    dispatch(getUserList());
     // form-api-selectField
-    // dispatch(getAllMasterPriority());
-    // dispatch(getAllMasterStatus());
-    // dispatch(getUsersDataList());
-    // dispatch(getAllOaFailureTypeList());
+    dispatch(getAllMasterPriority());
+    dispatch(getAllMasterStatus());
+    dispatch(getUsersDataList());
+    dispatch(getAllOaFailureTypeList());
+    dispatch(getBranchFlowList());
   }, [dispatch])
   
-  const PriorityData = [
-    { id: 1, name: "High", value:"HIGH" },
-    { id: 2, name: "Low" , value:"LOW"},
-    { id: 3, name: "Average",value:"AVERAGE" },
-    
-  ]
-  
-  const countryData = [
-    { id: 1, name: "India", value: "India" },
-    { id: 2, name: "USA", value: "USA" },
-    { id: 3, name: "Canada", value: "Canada" },
-    { id: 4, name: "Dubai", value: "Dubai" }
-  ]
+ 
   const {
     register,
     handleSubmit,
@@ -54,48 +43,57 @@ const UserDashboard = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-     dispatch(addUsers({
-      id: Math.random(),
-      fromUser: data.fromUser,
-      orderNumber: data.orderNumber,
-      documentNo:data.documentNo,
-       priority: data.priority,
-       branch: data.branch,
-       department: data.department,
-       subDepartment: data.subDepartment,
-       toUserId: data.toUserId,
-       status: data.status,
-       subject: data.subject,
-       flowEmailBody: data.flowEmailBody,
-       oaFailureType: data.oaFailureType,
-      comment: data.comment
-    }));
+    //  dispatch(addUsers({
+    //   id: Math.random(),
+    //   fromUser: data.fromUser,
+    //   orderNumber: parseInt(data.orderNumber),
+    //   documentNo:parseInt(data.documentNo),
+    //    priority: parseInt(data.priority),
+    //    branch: parseInt(data.branch),
+    //    department: parseInt(data.department),
+    //    subDepartment: parseInt(data.subDepartment),
+    //    toUserId: parseInt(data.toUserId),
+    //    status: parseInt(data.status),
+    //    subject: data.subject,
+    //    flowEmailBody: data.flowEmailBody,
+    //    oaFailureType: parseInt(data.oaFailureType),
+    //   comment: data.comment
+    // }));
+    let formData = {
+      masterDepartmentId:parseInt(data.masterDepartmentId),
+masterSubDepartmentId: parseInt(data.masterSubDepartmentId),
+masterBranchId: parseInt(data.masterBranchId),
+masterStatusId:parseInt(data.masterStatusId),
+priority:parseInt(data.priority),
+toUserId:parseInt(data.toUserId),
+fromUserId: 1,
+subject: data.subject,
+masterOAFailureId:parseInt(data.masterOAFailureId),
+orderNo: parseInt(data.orderNo),
+flowEmailBody:data.flowEmailBody,
+oaNumber:2, 
+comment: data.comment,
+isEmailToFlow:false,
+attachments:null,
+    }
+    dispatch(getAddUsers(formData));
     reset();
-    navigate("/user-list")
+    navigate("/user-list");
+    
+    console.log("formData",formData)
   }
 
   const handleReset = () => {
-    // reset({
-    // PRIORITY: { label: "", value: "" },
-    // BRANCH: { label: "", value: "" },
-    // DEPARTMENT: { label: "", value: "" },
-    // SUB_DEPARTMENT: { label: "", value: "" },
-    // STATUS: { label: "", value: "" },
-    // TO_USER: { label: "", value: "" },
-    //   OA_FAILURE_TYPE: { label: "", value: "" },
-    //   NAME: '',
-    //   DOC_NO: '',
-    //   ORDER_NUMBER: '',
-    //   SUBJECT: '',
-    //   FLOW_EMAIL_BODY:'',
-    
-    // });
-    setValue(SUB_DEPARTMENT, { label: "", value: "" });
     reset();
   };
+  
+  const handleLogout = () => {
+    dispatch((userLogout()));
+    navigate("/")
+  }
   return (
     <>
-      
+      {isLoading ? <Loader/> : ""}
       <div className={styles.mainContainer}>
           <p className={styles.TitleStyle}>
                 Webmyne System
@@ -116,7 +114,7 @@ const UserDashboard = () => {
            <Button
                 buttonName="Logout"
                 type="button"
-                 handleClick={()=>{}}
+                 handleClick={handleLogout}
           customClass={styles.buttonStyle}
               />
               </div>
@@ -189,25 +187,10 @@ const UserDashboard = () => {
 
             {/* priority */}
             <div className={styles.formFieldContainer}>
-  
             <label htmlFor={PRIORITY} className={styles.labelStyle}>
               Priority <span className={styles.asterick}>*</span>
             </label>
-          
           <div>
-          {/* <select
-          id="priority"
-                {...register(PRIORITY, userFormValidators[PRIORITY])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select Priority</option>
-          {PriorityData?.map((priority) => (
-            <option key={priority?.id} value={priority?.value}>
-              {priority?.name}
-            </option>
-          ))}
-     
-        </select> */}
                   <Select
               className={styles.selectInputField}
                           placeholder="Select Priority"
@@ -219,9 +202,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={PriorityData?.map((item) => ({
+                          options={masterPriorityList?.map((item) => ({
                             label: item?.name,
-                            value: item?.value,
+                            value: item?.id,
                           }))}
                           onChange={(e) => {
                             setValue(PRIORITY, e.value);
@@ -233,7 +216,6 @@ const UserDashboard = () => {
       height:"45px",
       borderRadius: "10px", 
       cursor: "pointer", 
-     
     }),
   }}
               maxMenuHeight={200}
@@ -252,22 +234,8 @@ const UserDashboard = () => {
             <label htmlFor={BRANCH} className={styles.labelStyle}>
               Branch<span className={styles.asterick}>*</span>
             </label>
-          
           <div>
-          {/* <select
-          id="branch"
-                {...register(BRANCH, userFormValidators[BRANCH])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select branch</option>
-          {countryData?.map((country) => (
-            <option key={country?.id} value={country?.name}>
-              {country?.name}
-            </option>
-          ))}
-     
-        </select> */}
-                  <Select
+           <Select
               className={styles.selectInputField}
                           placeholder="Select Branch"
                           closeMenuOnSelect={true}
@@ -278,9 +246,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
-                            label: item?.name,
-                            value: item?.value,
+                          options={branchFlowList?.map((item) => ({
+                            label: item?.branchName,
+                            value: item?.masterBranchId,
                           }))}
                           onChange={(e) => {
                             setValue(BRANCH, e.value);
@@ -311,21 +279,8 @@ const UserDashboard = () => {
             <label htmlFor={DEPARTMENT} className={styles.labelStyle}>
               Department<span className={styles.asterick}>*</span>
             </label>
-        
           <div>
-          {/* <select
-          id="department"
-                {...register(DEPARTMENT, userFormValidators[DEPARTMENT])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select department</option>
-          {countryData?.map((country) => (
-            <option key={country?.id} value={country?.name}>
-              {country?.name}
-            </option>
-          ))}
-     
-        </select> */}
+          
                   <Select
               className={styles.selectInputField}
                           placeholder="Select Department"
@@ -337,9 +292,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
-                            label: item?.name,
-                            value: item?.value,
+                          options={branchFlowList?.map((item) => ({
+                            label: item?.departmentName,
+                            value: item?.masterDepartmentId,
                           }))}
                           onChange={(e) => {
                             setValue(DEPARTMENT, e.value);
@@ -370,21 +325,7 @@ const UserDashboard = () => {
             <label htmlFor={SUB_DEPARTMENT} className={styles.labelStyle}>
               Sub Department<span className={styles.asterick}>*</span>
             </label>
-          
           <div>
-          {/* <select
-          id="department"
-                {...register(SUB_DEPARTMENT, userFormValidators[SUB_DEPARTMENT])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select sub department</option>
-          {countryData?.map((country) => (
-            <option key={country?.id} value={country?.name}>
-              {country?.name}
-            </option>
-          ))}
-     
-        </select> */}
                  <Select
               className={styles.selectInputField}
                           placeholder="Select Sub Department"
@@ -396,9 +337,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
-                            label: item?.name,
-                            value: item?.value,
+                          options={branchFlowList?.map((item) => ({
+                            label: item?.subDepartmentName,
+                            value: item?.masterSubDepartmentId,
                           }))}
                           onChange={(e) => {
                             setValue(SUB_DEPARTMENT, e.value);
@@ -429,21 +370,8 @@ const UserDashboard = () => {
             <label htmlFor={TO_USER} className={styles.labelStyle}>
               To User<span className={styles.asterick}>*</span>
             </label>
-         
           <div>
-          {/* <select
-          id="toUserId"
-                {...register(TO_USER, userFormValidators[TO_USER])}
-                className={styles.selectInputField}
-        >
-           <option value="">Select User</option>
-  {UserIDData?.map((usertype) => (
-    <option key={usertype?.id} value={usertype?.value}>
-      {usertype?.name}
-    </option>
-          ))}
-     
-        </select> */}
+         
                  <Select
               className={styles.selectInputField}
                           placeholder="Select User"
@@ -455,9 +383,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
-                            label: item?.name,
-                            value: item?.value,
+                          options={userDataList?.map((item) => ({
+                            label: item?.firstName,
+                            value: item?.id,
                           }))}
                           onChange={(e) => {
                             setValue(TO_USER, e.value);
@@ -485,27 +413,12 @@ const UserDashboard = () => {
 
                {/* status */}
            <div className={styles.formFieldContainer}>
-         
             <label htmlFor={STATUS} className={styles.labelStyle}>
               Status<span className={styles.asterick}>*</span>
             </label>
           
           <div>
-          {/* <select
-          id="status"
-                {...register(STATUS, userFormValidators[STATUS])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select Status</option>
-          {countryData?.map((country) => (
-            <option key={country?.id} value={country?.name}>
-              {country?.name}
-            </option>
-          ))}
-     
-        </select> */}
-                
-                 <Select
+         <Select
               className={styles.selectInputField}
                           placeholder="Select Status"
                           closeMenuOnSelect={true}
@@ -516,9 +429,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
+                          options={masterStatusList?.map((item) => ({
                             label: item?.name,
-                            value: item?.value,
+                            value: item?.id,
                           }))}
                           onChange={(e) => {
                             setValue(STATUS, e.value);
@@ -591,21 +504,7 @@ const UserDashboard = () => {
             </label>
          
           <div>
-          {/* <select
-          id="oaFailureType"
-                {...register(OA_FAILURE_TYPE, userFormValidators[OA_FAILURE_TYPE])}
-                className={styles.selectInputField}
-        >
-          <option value="">Select Type</option>
-          {countryData?.map((country) => (
-            <option key={country?.id} value={country?.name}>
-              {country?.name}
-            </option>
-          ))}
-     
-        </select> */}
-                
-                 <Select
+          <Select
               className={styles.selectInputField}
                           placeholder="Select Type"
                           closeMenuOnSelect={true}
@@ -616,9 +515,9 @@ const UserDashboard = () => {
                             ]
                           )}
                           isSearchable={true}
-                          options={countryData?.map((item) => ({
-                            label: item?.name,
-                            value: item?.value,
+                          options={OaFailureTypeList?.map((item) => ({
+                            label: item?.type,
+                            value: item?.id,
                           }))}
                           onChange={(e) => {
                             setValue(OA_FAILURE_TYPE, e.value);
@@ -658,7 +557,7 @@ const UserDashboard = () => {
 
             <div className={styles.buttonContainer}>
             <Button
-          buttonName="Add"
+          buttonName="Save"
           type="submit"
           customClass={styles.submitButtonStyle}
             />

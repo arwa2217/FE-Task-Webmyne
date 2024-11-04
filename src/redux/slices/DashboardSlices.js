@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {getAllUsers, getMasterPriority, getMasterStatus, getOaFailureTypeList, getUsers, userLogin } from "../actions/DashboardActions";
+import {getAllUsers, getBranchFlow, getCreateUsers, getMasterPriority, getMasterStatus, getOaFailureTypeList, getUsers, userLogin } from "../actions/DashboardActions";
 
 export const userLoginDetail = createAsyncThunk(
     'userDetails/userLoginDetail',
@@ -7,10 +7,7 @@ export const userLoginDetail = createAsyncThunk(
         try {
             const res = await userLogin(payload);
           if (res.status === 200) {
-              localStorage.setItem("accessToken", res.data.accessToken);
-              localStorage.setItem("refreshToken", res.data.refreshToken);
               return res.data;
-                
             }
         }
         catch (error) {
@@ -96,6 +93,36 @@ export const getUsersDataList = createAsyncThunk(
         }
 )
 
+export const getBranchFlowList = createAsyncThunk(
+    'userDetails/getBranchFlowList',
+    async (payload, {rejectWithValue}) => {
+        try {
+            const res = await getBranchFlow();
+            if (res.status === 200) {
+                return res.data;
+            }
+        }
+        catch (error) {
+            rejectWithValue(error)
+        }
+        }
+)
+
+export const getAddUsers = createAsyncThunk(
+    'userDetails/getAddUsers',
+    async (payload, {rejectWithValue}) => {
+        try {
+            const res = await getCreateUsers();
+            if (res.status === 200) {
+                return res.data;
+            }
+        }
+        catch (error) {
+            rejectWithValue(error)
+        }
+        }
+)
+
 export const userDetailSlice = createSlice({
   name: "userDetailSlice",
   initialState: {
@@ -108,20 +135,17 @@ export const userDetailSlice = createSlice({
     masterStatusList: [],
     userDataList: [],
     OaFailureTypeList: [],
-    userInfo:[],
+    userInfo: [],
+    branchFlowList: [],
+    addUserList:[]
   }, 
   
   reducers: {
       addUsers: (state, action) => {
             state.userInfo?.push(action?.payload);
     },
-    deleteUser: (state, action) => {
-            state.userInfo = state.userInfo?.filter(
-            (user) => user?.id !== action.payload);
-    },
     userLogout: (state) => {
             localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
             state.isAuthenticated = false;
             state.userDetails = {};
 state.usersList = [];
@@ -129,7 +153,9 @@ state.masterPriorityList = [];
 state.masterStatusList = [];
 state.userDataList = [];
 state.OaFailureTypeList = [];
-state.userInfo = [];
+      state.userInfo = [];
+      state.branchFlowList = [];
+      state.addUserList = [];
     },
   },
   
@@ -138,11 +164,13 @@ state.userInfo = [];
       // login
       .addCase(userLoginDetail.pending, (state) => {
         state.isLoading = true;
+         state.isAuthenticated = false;
       })
       .addCase(userLoginDetail.fulfilled, (state, action) => {
         state.isLoading = false;
-         state.isAuthenticated = true;
         state.userDetails = action.payload;
+        state.isAuthenticated = true;
+        localStorage.setItem("accessToken", state.userDetails?.data?.accessToken);
       })
       .addCase(userLoginDetail.rejected, (state, action) => {
         state.isLoading = false;
@@ -155,7 +183,7 @@ state.userInfo = [];
       })
       .addCase(getUserList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.usersList = action.payload;
+        state.usersList = action.payload?.data?.items;
       })
       .addCase(getUserList.rejected, (state, action) => {
         state.isLoading = false;
@@ -167,7 +195,7 @@ state.userInfo = [];
       })
       .addCase(getAllMasterPriority.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.masterPriorityList = action.payload;
+        state.masterPriorityList = action.payload?.data;
       })
       .addCase(getAllMasterPriority.rejected, (state, action) => {
         state.isLoading = false;
@@ -180,7 +208,7 @@ state.userInfo = [];
       })
       .addCase(getAllMasterStatus.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.masterStatusList = action.payload;
+        state.masterStatusList = action.payload?.data;
       })
       .addCase(getAllMasterStatus.rejected, (state, action) => {
         state.isLoading = false;
@@ -193,7 +221,7 @@ state.userInfo = [];
       })
       .addCase(getAllOaFailureTypeList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.OaFailureTypeList = action.payload;
+        state.OaFailureTypeList = action.payload?.data;
       })
       .addCase(getAllOaFailureTypeList.rejected, (state, action) => {
         state.isLoading = false;
@@ -206,13 +234,37 @@ state.userInfo = [];
       })
       .addCase(getUsersDataList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userDataList = action.payload;
+        state.userDataList = action.payload?.data;
       })
       .addCase(getUsersDataList.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
+      //getBranchFlowList
+    .addCase(getBranchFlowList.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBranchFlowList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.branchFlowList = action.payload?.data;
+      })
+      .addCase(getBranchFlowList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+   //  getAddUsers
+   .addCase(getAddUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAddUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.addUserList = action.payload;
+      })
+      .addCase(getAddUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
   },
 });
-export const { addUsers,deleteUser,userLogout} = userDetailSlice.actions;
+export const { addUsers,userLogout} = userDetailSlice.actions;
 export default userDetailSlice.reducer;
