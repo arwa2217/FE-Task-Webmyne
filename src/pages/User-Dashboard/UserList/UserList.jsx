@@ -12,11 +12,9 @@ const UserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading } = useSelector((state) => state.userDetail);
-  console.log("isLoading??????",isLoading)
   const usersListData = useSelector((state) => state.userDetail?.userInfo);
-  const { usersList,addUserList} = useSelector((state) => state.userDetail);
-  console.log("usersList??,??", usersList);
-  console.log("addUserList??????",addUserList)
+  const { usersList} = useSelector((state) => state.userDetail);
+ 
    
     useEffect(() => { 
     // get-api-allUsers

@@ -16,11 +16,7 @@ const UserDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {isLoading, masterPriorityList, masterStatusList, branchFlowList,userDataList, OaFailureTypeList } = useSelector((state) => state.userDetail);
-  console.log("masterPriorityList?????????", masterPriorityList);
-  console.log("masterStatusList?????", masterStatusList);
-  console.log("userDataList??????", userDataList);
-  console.log('OaFailureTypeList????????', OaFailureTypeList);
-  console.log('branchFlowList????????', branchFlowList);
+
 
   useEffect(() => { 
     // form-api-selectField
@@ -79,7 +75,7 @@ attachments:null,
     dispatch(getAddUsers(formData));
     reset();
     navigate("/user-list");
-    
+
     console.log("formData",formData)
   }
 
