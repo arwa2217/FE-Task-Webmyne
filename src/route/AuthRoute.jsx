@@ -1,11 +1,18 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const AuthRoute = () => {
- 
-    const accessToken = localStorage.getItem("accessToken");
+ const {isAuthenticated}= useSelector((state)=>state.userDetail)
+    // const accessToken = localStorage.getItem("accessToken");
 
-    return accessToken ? <Outlet /> : <Navigate to="/" />;
+    // return accessToken ? <Outlet /> : <Navigate to="/" />;
+    if (!isAuthenticated) {
+        return <Navigate to="/" />
+    }
+    else {
+        return <Outlet/>
+    }
 }
 
 export default AuthRoute

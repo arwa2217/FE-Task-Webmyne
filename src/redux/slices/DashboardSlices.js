@@ -101,7 +101,7 @@ export const userDetailSlice = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    isAuthenticated: !!localStorage.getItem("accessToken"),
+    isAuthenticated: false,
     userDetails:{},
     usersList: [],
     masterPriorityList: [],
@@ -147,6 +147,7 @@ state.userInfo = [];
       .addCase(userLoginDetail.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
+         state.isAuthenticated = false;
       })
   //  all-users
    .addCase(getUserList.pending, (state) => {

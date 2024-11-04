@@ -10,45 +10,40 @@ export const userLogin = (data) => {
     }
 });
 }
+
+// headers
+const getAuthHeaders = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+});
+
 // getAllUser
 export const getAllUsers = () => {
     return axios.get(GET_USERS, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization':'eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYXNoYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJyZWZyZXNoRHVyYXRpb24iOiIxMC8zMC8yMDI0IDEzOjIyOjEyIiwiZXhwIjoxNzMwMTg4MzMyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ'
-        }
+        headers: getAuthHeaders()   
     })
 }
 // getMasterPriority
 export const getMasterPriority = () => {
     return axios.get(MASTER_PRIORITY, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: getAuthHeaders()   
     })
 }
 // getMasterStatus
 export const getMasterStatus = () => {
     return axios.get(MASTER_STATUS, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: getAuthHeaders()   
     })
 }
 // getOAFAILURETYPE
 export const getOaFailureTypeList = () => {
     return axios.get(OAFAILURETYPE, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: getAuthHeaders()   
     })
 }
 // getUsers
 export const getUsers = () => {
     return axios.get(USERS, {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization':'Bearer eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYXNoYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJyZWZyZXNoRHVyYXRpb24iOiIxMC8zMC8yMDI0IDEzOjIyOjEyIiwiZXhwIjoxNzMwMTg4MzMyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ'
-        }
+        headers: getAuthHeaders()   
     })
 }
