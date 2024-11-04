@@ -10,16 +10,16 @@ export const userLogin = (data) => {
     }
 });
 }
-
+const token = localStorage.getItem("accessToken");
 // headers
 const getAuthHeaders = () => ({
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    'Authorization': `Bearer ${token}`
 });
 
 const getMultiHeaders = () => ({
     "Content-Type": "multipart/form-data",
-    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    'Authorization': `Bearer ${token}`
 });
 
 // getAllUser
